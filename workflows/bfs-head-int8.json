@@ -1,0 +1,175 @@
+{
+ "1": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+   "weight_dtype": "default"
+  }
+ },
+ "2": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+   "type": "qwen_image"
+  }
+ },
+ "3": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+  }
+ },
+ "10": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "scene.png"
+  }
+ },
+ "11": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "reference_head.png"
+  }
+ },
+ "12": {
+  "class_type": "ImageScale",
+  "inputs": {
+   "upscale_method": "lanczos",
+   "width": 768,
+   "height": 768,
+   "crop": "disabled",
+   "image": [
+    "10",
+    0
+   ]
+  }
+ },
+ "13": {
+  "class_type": "ImageScale",
+  "inputs": {
+   "upscale_method": "lanczos",
+   "width": 512,
+   "height": 512,
+   "crop": "disabled",
+   "image": [
+    "11",
+    0
+   ]
+  }
+ },
+ "20": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "model": [
+    "1",
+    0
+   ],
+   "lora_name": "p_qwen_image_2.1_8step_v0.1.safetensors",
+   "strength_model": 1.0
+  }
+ },
+ "21": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "model": [
+    "20",
+    0
+   ],
+   "lora_name": "bfs_head_v1.1_qwen_2.1.safetensors",
+   "strength_model": 1.0
+  }
+ },
+ "22": {
+  "class_type": "QwenImage21Cache",
+  "inputs": {
+   "model": [
+    "21",
+    0
+   ],
+   "device": "auto",
+   "dtype": "default"
+  }
+ },
+ "30": {
+  "class_type": "TextEncodeQwenImage21",
+  "inputs": {
+   "clip": [
+    "2",
+    0
+   ],
+   "vae": [
+    "3",
+    0
+   ],
+   "prompt": "head_swap: start with <image1> as the base image, keeping its lighting, environment, and background. remove the head from <image1> completely and replace it with the head from <image2>, strictly preserving the hair, eye color, nose structure from <image2>. copy the direction of the eye, head rotation, micro expressions from <image1>, high quality, sharp details, 4k",
+   "negative_prompt": "",
+   "resolution": 0,
+   "images.image_1": [
+    "12",
+    0
+   ],
+   "images.image_2": [
+    "13",
+    0
+   ]
+  }
+ },
+ "31": {
+  "class_type": "EmptyLatentImage",
+  "inputs": {
+   "width": 1024,
+   "height": 1024,
+   "batch_size": 1
+  }
+ },
+ "32": {
+  "class_type": "KSampler",
+  "inputs": {
+   "model": [
+    "22",
+    0
+   ],
+   "positive": [
+    "30",
+    0
+   ],
+   "negative": [
+    "30",
+    1
+   ],
+   "latent_image": [
+    "31",
+    0
+   ],
+   "seed": 42,
+   "steps": 8,
+   "cfg": 1.0,
+   "sampler_name": "deis_2m",
+   "scheduler": "simple",
+   "denoise": 1.0
+  }
+ },
+ "33": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "32",
+    0
+   ],
+   "vae": [
+    "3",
+    0
+   ]
+  }
+ },
+ "34": {
+  "class_type": "SaveImage",
+  "inputs": {
+   "images": [
+    "33",
+    0
+   ],
+   "filename_prefix": "bfs_head"
+  }
+ }
+}
