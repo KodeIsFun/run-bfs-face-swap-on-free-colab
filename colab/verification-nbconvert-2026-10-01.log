@@ -1,0 +1,12 @@
+Headless notebook execution receipt — 2026-10-01
+
+Fresh Colab T4 VM, repo cloned from GitHub main (4b004ca), the ACTUAL notebook executed via:
+  jupyter nbconvert --to notebook --execute --inplace colab/run-bfs-faceswap-t4.ipynb --ExecutePreprocessor.timeout=2400
+Result: NBEXIT:0 — all 8 code cells executed with outputs, both swaps rendered, tunnel URL printed.
+Executed notebook committed as colab/run-bfs-faceswap-t4_output.ipynb (images embedded).
+
+Determinism proof: the fresh run's head_swap.png is PIXEL-IDENTICAL to the lab's measured
+GGUF row (pixel-sha 24473a31347cc9ad, 1024x1024) — same seed, same weights, same recipe.
+Fresh body_swap.png (GGUF, 768x768, 96s) — first verification of body-on-GGUF.
+
+--- nbconvert log tail ---
