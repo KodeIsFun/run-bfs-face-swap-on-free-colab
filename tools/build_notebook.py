@@ -112,7 +112,7 @@ Image.open(body_out)
 CELL_TUNNEL = """# Cell 8 — expose the API through a public quick tunnel (no account needed),
 # then run more swaps from ANY machine with clients/headswap.py (stdlib only).
 import os, re, subprocess, time, urllib.request
-CF = "/content/cloudflared"
+CF = "/tmp/cloudflared"   # /tmp exists on both Colab and Kaggle
 if not os.path.exists(CF):
     urllib.request.urlretrieve("https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64", CF)
     os.chmod(CF, 0o755)
