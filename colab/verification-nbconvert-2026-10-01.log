@@ -9,4 +9,7 @@ Determinism proof: the fresh run's head_swap.png is PIXEL-IDENTICAL to the lab's
 GGUF row (pixel-sha 24473a31347cc9ad, 1024x1024) — same seed, same weights, same recipe.
 Fresh body_swap.png (GGUF, 768x768, 96s) — first verification of body-on-GGUF.
 
---- nbconvert log tail ---
+--- nbconvert log (captured from the VM via polls; the tar skipped it — path bug, receipts tar now fixed in verify flow) ---
+Updating files: 100% (279/279), done.            <- git clone of this repo from GitHub main
+[NbConvertApp] Writing 4078332 bytes to colab/run-bfs-faceswap-t4.ipynb
+NBEXIT:0
