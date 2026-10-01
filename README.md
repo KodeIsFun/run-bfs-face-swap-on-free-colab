@@ -83,10 +83,24 @@ Full stories in [references/05-troubleshooting.md](references/05-troubleshooting
 
 ## Verification receipts
 
-The notebook was executed end-to-end on fresh VMs; logs ship in
-[colab/](colab/) (`verification-*.log`), and the Kaggle kernel
-([emdadh/run-bfs-faceswap-t4](https://www.kaggle.com/code/emdadh/run-bfs-faceswap-t4))
-is a public, re-runnable receipt. Raw measurement provenance:
+- **Colab**: the ACTUAL notebook executed headlessly (jupyter nbconvert) on a
+  fresh VM with code cloned straight from GitHub — `NBEXIT: 0`, all cells with
+  outputs; executed notebook committed as
+  [colab/run-bfs-faceswap-t4_output.ipynb](colab/run-bfs-faceswap-t4_output.ipynb)
+  (tunnel URL printed, both swaps rendered). The fresh head swap is
+  **pixel-identical** to the lab's measured GGUF row.
+- **Kaggle**: public kernel
+  [emdadh/run-bfs-faceswap-t4](https://www.kaggle.com/code/emdadh/run-bfs-faceswap-t4)
+  ran the same notebook COMPLETE: install 41 s → weights 196 s → boot 52 s →
+  head swap 132 s → body swap 90 s (receipt log:
+  [colab/verification-kaggle-2026-10-01.log](colab/verification-kaggle-2026-10-01.log)).
+- **Determinism scope (measured)**: same surface → same seed = pixel-identical
+  output (Colab fresh-VM re-run matched the lab byte-for-byte at the pixel
+  level). Across surfaces (Colab ↔ Kaggle) the same seed yields a *different*
+  draw of equivalent quality (different torch build / T4×2 host) — do not
+  expect cross-surface byte reproducibility.
+
+Raw measurement provenance:
 [GPUTests lab, project 2026-W40-bfs-headswap-t4](https://github.com/KodeIsFun/GPUTests/tree/main/projects/2026-W40-bfs-headswap-t4).
 
 ## Licenses

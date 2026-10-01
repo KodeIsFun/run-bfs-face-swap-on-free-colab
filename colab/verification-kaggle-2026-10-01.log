@@ -1,0 +1,23 @@
+Kaggle kernel receipt — 2026-10-01
+
+Public kernel: https://www.kaggle.com/code/emdadh/run-bfs-faceswap-t4 (version 1)
+Notebook: kaggle/run-bfs-faceswap-t4.ipynb pushed via kaggle CLI, GPU T4, internet on.
+
+Cell timings (from the kernel log):
+  GPU check:  Tesla T4
+  install:    41 s
+  weights:    196 s  (~14.2 GB: GGUF DiT + int8 TE + VAE + 3 LoRAs)
+  boot+preflight: 52 s
+  head swap:  132 s   (1024x1024)
+  body swap:  90 s    (768x768)
+  tunnel:     printed trycloudflare URL
+
+Artifacts in the kernel output: head_swap.png, body_swap.png, scene.png,
+reference_head.png, reference_person.png, bfs_swap.py (fetched from GitHub main), log.
+
+Quality: head swap = red curly identity on scene body, beret kept, FREE GPU LAB
+sign letter-perfect (eyeballed from the downloaded output).
+
+Determinism note: Kaggle's same-seed draw differs from Colab's at the pixel level
+(different torch build / T4x2 host); quality equivalent. Same-surface runs are
+pixel-deterministic (verified on Colab).
